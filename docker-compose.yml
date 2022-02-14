@@ -1,0 +1,17 @@
+version: '3'
+
+volumes:
+  composer_volume: {}
+  history_volume: {}
+
+services:
+
+  php:
+    build: docker/php
+    tty: true # -t option in docker
+    stdin_open: true # -i option in docker
+    hostname: ${HOSTNAME}
+    volumes:
+      - ./:/var/www/project
+      - composer_volume:/home/user/.composer
+      - history_volume:/home/user/history

@@ -1,0 +1,9 @@
+/.env
+/.env.local
+/.tmp
+/.build
+/.phpunit.result.cache
+
+/vendor
+
+!.gitkeep

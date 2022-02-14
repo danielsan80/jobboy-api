@@ -1,0 +1,49 @@
+{
+    "name": "dansan/jobboy-api",
+    "description": "It's the api integration for a Sf app using JobBoy",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Danilo Sanchi",
+            "email": "danilo.sanchi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3",
+        "ext-json": "*",
+        "symfony/framework-bundle": "^3.4||^4.3",
+        "dansan/jobboy": "*",
+        "beberlei/assert": "^3.0",
+        "ramsey/uuid": "^3.8"
+    },
+    "require-dev": {
+        "dansan/jobboy-test-pack":"*",
+        "dansan/fixture-handler": "*"
+    },
+    "config": {
+        "preferred-install": {
+            "*": "dist"
+        },
+        "process-timeout": 60,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "JobBoy\\": "src/JobBoy/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        }
+    },
+
+    "minimum-stability": "stable",
+    "repositories": []
+}
