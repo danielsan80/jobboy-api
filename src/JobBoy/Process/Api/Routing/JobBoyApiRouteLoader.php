@@ -18,7 +18,7 @@ class JobBoyApiRouteLoader extends Loader
 
         $routes = new RouteCollection();
 
-        $resource =  __DIR__.'/../Resources/routing.yaml';
+        $resource = __DIR__ . '/../Resources/config/routing.yaml';
         $type = 'yaml';
 
         $importedRoutes = $this->import($resource, $type);
