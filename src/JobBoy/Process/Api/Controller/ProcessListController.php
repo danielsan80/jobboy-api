@@ -14,9 +14,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/jobboy/api/v1")
- */
 class ProcessListController extends AbstractController
 {
 
@@ -33,7 +30,7 @@ class ProcessListController extends AbstractController
     }
 
     /**
-     * @Route("/processes", name="jobboy_api_process_list", methods={"GET"})
+     * @Route("/v1/processes", name="jobboy_api_process_list", methods={"GET"})
      */
     public function execute(Request $request): Response
     {

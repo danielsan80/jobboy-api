@@ -1,0 +1,9 @@
+services:
+
+  JobBoy\Process\Api\Routing\JobBoyApiRouteLoader:
+    class: JobBoy\Process\Api\Routing\JobBoyApiRouteLoader
+    arguments:
+      - '%kernel.environment%'
+    tags:
+      - { name: 'routing.loader' }
+

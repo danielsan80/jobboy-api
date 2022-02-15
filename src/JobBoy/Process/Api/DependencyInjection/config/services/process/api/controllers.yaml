@@ -1,0 +1,8 @@
+services:
+  JobBoy\Process\Api\Controller\ProcessListController:
+    class: JobBoy\Process\Api\Controller\ProcessListController
+    arguments:
+      - '@JobBoy\Process\Application\Service\ListProcesses'
+      - '@JobBoy\Process\Api\Normalizer\ProcessNormalizer'
+    tags:
+      - {name: 'kernel.controller'}

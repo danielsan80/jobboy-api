@@ -1,0 +1,3 @@
+services:
+  JobBoy\Process\Api\Normalizer\ProcessNormalizer:
+    class: JobBoy\Process\Api\Normalizer\ProcessNormalizer
