@@ -1,0 +1,6 @@
+services:
+
+  JobBoy\Process\Api\Security\RequiredRoleProvider:
+    class: JobBoy\Process\Api\Security\RequiredRoleProvider
+    arguments:
+      - '%jobboy.api.required_role%'
