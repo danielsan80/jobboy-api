@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace JobBoy\Bundle\JobBoyBundle\Routing;
+namespace JobBoy\Process\Api\Routing;
 
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\RouteCollection;
@@ -18,7 +18,7 @@ class JobBoyApiRouteLoader extends Loader
 
         $routes = new RouteCollection();
 
-        $resource =  __DIR__.'/../Resources/config/routing.yaml';
+        $resource =  __DIR__.'/../Resources/routing.yaml';
         $type = 'yaml';
 
         $importedRoutes = $this->import($resource, $type);
