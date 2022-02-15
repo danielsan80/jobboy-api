@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace JobBoy\Process\Api\Controller;
 
 use JobBoy\Process\Api\Response\Collection;
+use JobBoy\Process\Api\Security\RequiredRoleProvider;
 use JobBoy\Process\Api\Security\Roles;
 use JobBoy\Process\Application\DTO\Process;
 use JobBoy\Process\Application\Service\ListProcesses;
@@ -17,14 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProcessListController extends AbstractController
 {
 
+    private $requiredRoleProvider;
     private $listProcesses;
     private $processNormalizer;
 
     public function __construct(
+        RequiredRoleProvider $requiredRoleProvider,
         ListProcesses $listProcesses,
         ProcessNormalizer $processNormalizer
     )
     {
+        $this->requiredRoleProvider = $requiredRoleProvider;
         $this->listProcesses = $listProcesses;
         $this->processNormalizer = $processNormalizer;
     }
@@ -34,7 +38,7 @@ class ProcessListController extends AbstractController
      */
     public function execute(Request $request): Response
     {
-        $this->denyAccessUnlessGranted(Roles::ROLE_JOBBOY);
+        $this->denyAccessUnlessGranted($this->requiredRoleProvider->get());
 
         $processes = $this->listProcesses->execute();
         $processes = array_reverse($processes);
