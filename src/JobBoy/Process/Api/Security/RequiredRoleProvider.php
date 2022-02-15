@@ -5,7 +5,7 @@ namespace JobBoy\Process\Api\Security;
 
 class RequiredRoleProvider
 {
-    private string $role;
+    private $role;
 
     public function __construct(string $role = Roles::ROLE_JOBBOY)
     {
