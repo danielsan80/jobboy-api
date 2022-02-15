@@ -5,4 +5,4 @@ services:
       - '@JobBoy\Process\Application\Service\ListProcesses'
       - '@JobBoy\Process\Api\Normalizer\ProcessNormalizer'
     tags:
-      - {name: 'kernel.controller'}
+      - {name: 'controller.service_arguments'}
