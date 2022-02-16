@@ -5,15 +5,31 @@ namespace JobBoy\Process\Api\EventSubscriber;
 
 use JobBoy\Process\Api\Controller\JobBoyApiController;
 use JobBoy\Process\Api\Response\Error;
+use JobBoy\Process\Api\Response\Unauthorized;
+use JobBoy\Process\Api\Security\RequiredRoleProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class JobBoyApiControllerEventSubscriber implements EventSubscriberInterface
 {
     private const HANDLE_EXCEPTION = 'handle_exception';
+
+    private $authorizationChecker;
+    private $requiredRoleProvider;
+
+    public function __construct(
+        AuthorizationCheckerInterface $authorizationChecker,
+        RequiredRoleProvider $requiredRoleProvider
+    )
+    {
+        $this->authorizationChecker = $authorizationChecker;
+        $this->requiredRoleProvider = $requiredRoleProvider;
+    }
 
     public function onKernelController(ControllerEvent $event)
     {
@@ -30,6 +46,9 @@ class JobBoyApiControllerEventSubscriber implements EventSubscriberInterface
         }
 
         $event->getRequest()->attributes->set(self::HANDLE_EXCEPTION, true);
+
+        $this->denyAccessUnlessAuthorized();
+
     }
 
     public function onKernelException(ExceptionEvent $event)
@@ -39,13 +58,30 @@ class JobBoyApiControllerEventSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $e = $event->getThrowable();
-        $error = new Error($e->getMessage());
+        $e = $event->getException();
 
-        $response = new JsonResponse($error->normalize());
-        $event->setResponse($response);
+        if ($event->getResponse()->isForbidden()) {
+            $unauthorized = new Unauthorized($e->getMessage());
+            $event->setResponse(new JsonResponse($unauthorized->normalize()));
+            return;
+        }
+
+        $error = new Error($e->getMessage());
+        $event->setResponse(new JsonResponse($error->normalize()));
+
     }
 
+    private function denyAccessUnlessAuthorized(): void
+    {
+        $requiredRole = $this->requiredRoleProvider->get();
+        if (!$this->authorizationChecker->isGranted($requiredRole)) {
+            $exception = new AccessDeniedException('Access Denied.');
+            $exception->setAttributes($requiredRole);
+            $exception->setSubject(null);
+
+            throw $exception;
+        }
+    }
 
     public static function getSubscribedEvents()
     {

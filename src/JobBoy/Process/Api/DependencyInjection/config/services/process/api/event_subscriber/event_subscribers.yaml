@@ -1,5 +1,8 @@
 services:
   JobBoy\Process\Api\EventSubscriber\JobBoyApiControllerEventSubscriber:
     class: JobBoy\Process\Api\EventSubscriber\JobBoyApiControllerEventSubscriber
+    arguments:
+      - '@security.authorization_checker'
+      - '@JobBoy\Process\Api\Security\RequiredRoleProvider'
     tags:
       - {name: 'kernel.event_subscriber'}

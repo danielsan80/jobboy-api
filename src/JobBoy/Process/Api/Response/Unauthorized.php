@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace JobBoy\Process\Api\Response;
 
-class Error implements Response
+class Unauthorized implements Response
 {
     private $message;
     private $info;
@@ -17,7 +17,7 @@ class Error implements Response
     public function normalize(): array
     {
         return [
-            'status' => (string)Status::error(),
+            'status' => (string)Status::unauthorized(),
             'message' => $this->message,
             'info' => $this->info
         ];
