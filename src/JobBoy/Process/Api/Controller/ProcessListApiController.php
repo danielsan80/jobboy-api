@@ -3,19 +3,18 @@ declare(strict_types=1);
 
 namespace JobBoy\Process\Api\Controller;
 
+use JobBoy\Process\Api\Normalizer\ProcessNormalizer;
 use JobBoy\Process\Api\Response\Collection;
 use JobBoy\Process\Api\Security\RequiredRoleProvider;
-use JobBoy\Process\Api\Security\Roles;
 use JobBoy\Process\Application\DTO\Process;
 use JobBoy\Process\Application\Service\ListProcesses;
-use JobBoy\Process\Api\Normalizer\ProcessNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProcessListController extends AbstractController
+class ProcessListApiController extends AbstractController implements JobBoyApiController
 {
 
     private $requiredRoleProvider;
@@ -47,7 +46,7 @@ class ProcessListController extends AbstractController
             return $this->processNormalizer->normalize($process);
         }, $processes);
 
-        $response = new Collection($items,count($items));
+        $response = new Collection($items, count($items));
 
         return new JsonResponse($response->normalize());
     }

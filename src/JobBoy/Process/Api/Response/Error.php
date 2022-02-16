@@ -9,7 +9,7 @@ class Error implements Response
     private $message;
     private $info;
 
-    public function __construct(string $message, array $info)
+    public function __construct(string $message, array $info = [])
     {
         $this->message = $message;
         $this->info = $info;
