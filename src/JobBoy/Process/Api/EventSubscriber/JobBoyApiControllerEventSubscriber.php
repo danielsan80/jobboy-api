@@ -41,7 +41,7 @@ class JobBoyApiControllerEventSubscriber implements EventSubscriberInterface
             $controller = $controller[0];
         }
 
-        if (!$controller[0] instanceof JobBoyApiController) {
+        if (!$controller instanceof JobBoyApiController) {
             return;
         }
 
@@ -60,7 +60,7 @@ class JobBoyApiControllerEventSubscriber implements EventSubscriberInterface
 
         $e = $event->getException();
 
-        if ($event->getResponse()->isForbidden()) {
+        if ($e instanceof AccessDeniedHttpException) {
             $unauthorized = new Unauthorized($e->getMessage());
             $event->setResponse(new JsonResponse($unauthorized->normalize()));
             return;
