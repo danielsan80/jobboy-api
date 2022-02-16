@@ -1,0 +1,5 @@
+services:
+  JobBoy\Process\Api\EventSubscriber\JobBoyApiControllerEventSubscriber:
+    class: JobBoy\Process\Api\EventSubscriber\JobBoyApiControllerEventSubscriber
+    tags:
+      - {name: 'kernel.event_subscriber'}
