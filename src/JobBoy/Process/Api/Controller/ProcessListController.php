@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ProcessListApiController extends AbstractController implements JobBoyApiController
+class ProcessListController extends AbstractController implements JobBoyApiController
 {
 
     private $requiredRoleProvider;
