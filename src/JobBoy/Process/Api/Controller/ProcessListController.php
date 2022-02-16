@@ -17,17 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProcessListController extends AbstractController implements JobBoyApiController
 {
 
-    private $requiredRoleProvider;
     private $listProcesses;
     private $processNormalizer;
 
     public function __construct(
-        RequiredRoleProvider $requiredRoleProvider,
         ListProcesses $listProcesses,
         ProcessNormalizer $processNormalizer
     )
     {
-        $this->requiredRoleProvider = $requiredRoleProvider;
         $this->listProcesses = $listProcesses;
         $this->processNormalizer = $processNormalizer;
     }
@@ -37,8 +34,6 @@ class ProcessListController extends AbstractController implements JobBoyApiContr
      */
     public function execute(Request $request): Response
     {
-        $this->denyAccessUnlessGranted($this->requiredRoleProvider->get());
-
         $processes = $this->listProcesses->execute();
         $processes = array_reverse($processes);
 
