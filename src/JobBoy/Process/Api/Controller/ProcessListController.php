@@ -5,7 +5,6 @@ namespace JobBoy\Process\Api\Controller;
 
 use JobBoy\Process\Api\Normalizer\ProcessNormalizer;
 use JobBoy\Process\Api\Response\Collection;
-use JobBoy\Process\Api\Security\RequiredRoleProvider;
 use JobBoy\Process\Application\DTO\Process;
 use JobBoy\Process\Application\Service\ListProcesses;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
